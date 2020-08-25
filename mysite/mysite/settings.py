@@ -100,9 +100,9 @@ if os.getenv('GAE_APPLICATION', None):
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'HOST': '/cloudsql/enertrack:europe-west1:db-enertrack',
-            'USER': '',
-            'PASSWORD': '',
-            'NAME': '',
+            'USER': env("DB_USER"),
+            'PASSWORD': env("DB_PASSWORD"),
+            'NAME': env("DB_NAME"),
         }
     }
 else:
