@@ -11,6 +11,22 @@ PRODUCTION_TYPE_CHOICES = (
     ("WIND_ONSHORE", "wind_onshore"),
 )
 
+FORECAST_PRODUCTION_TYPE_CHOICES = (
+    ("AGGREGATED_FRANCE", "aggregated_france"),
+    ("WIND", "wind"),
+    ("AGGREGATED_CPC", "aggregated_cpc"),
+    ("SOLAR", "solar"),
+    ("MDSE", "mdse"),
+)
+
+FORECAST_TYPE = (
+    ("CURRENT", "current"),
+    ("ID", "id"),
+    ("D-1", "d-1"),
+    ("D-2", "d-2"),
+    ("D-3", "d-3"),
+)
+
 
 class Country(models.Model):
     code = models.CharField(max_length=5, unique=True)
@@ -24,9 +40,7 @@ class Country(models.Model):
 
 
 class InstalledCapacity(models.Model):
-    country = models.ForeignKey(
-        Country, on_delete=models.CASCADE
-    )
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
     value = models.IntegerField(help_text="expressed in kW")
     date = models.DateField(auto_now=False)
     production_type = models.CharField(
@@ -38,3 +52,13 @@ class InstalledCapacity(models.Model):
 
     class Meta:
         verbose_name_plural = "InstalledCapacities"
+
+
+class Forecast(models.Model):
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    value = models.IntegerField(help_text="expressed in kW")
+    date = models.DateField(auto_now=False)
+    forecast_production_type = models.CharField(
+        max_length=50, choices=FORECAST_PRODUCTION_TYPE_CHOICES, default="SOLAR"
+    )
+    type = models.CharField(max_length=7, choices=FORECAST_TYPE, default="CURRENT")
