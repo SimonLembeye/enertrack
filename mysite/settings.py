@@ -129,3 +129,7 @@ USE_TZ = True
 # https://cloud.google.com/appengine/docs/flexible/python/serving-static-files
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATIC_URL = "/static/"
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
