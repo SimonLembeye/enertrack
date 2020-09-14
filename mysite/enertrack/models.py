@@ -57,8 +57,16 @@ class InstalledCapacity(models.Model):
 class Forecast(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     value = models.IntegerField(help_text="expressed in kW")
-    date = models.DateField(auto_now=False)
+    start_date = models.DateTimeField(auto_now=False)
+    updated_date = models.DateTimeField(auto_now=False)
     forecast_production_type = models.CharField(
         max_length=50, choices=FORECAST_PRODUCTION_TYPE_CHOICES, default="SOLAR"
     )
     type = models.CharField(max_length=7, choices=FORECAST_TYPE, default="CURRENT")
+
+    def are_the_same_day(self, date):
+        return (
+            self.start_date.day == date.day
+            and self.start_date.month == date.month
+            and self.start_date.year == date.year
+        )

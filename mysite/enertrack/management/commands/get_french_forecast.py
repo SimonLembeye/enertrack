@@ -3,7 +3,7 @@ import requests
 import datetime
 from django.core.management import BaseCommand
 from enertrack.api_utils import get_rte_access_token
-from enertrack.models import Country
+from enertrack.models import Country, Forecast
 
 
 class Command(BaseCommand):
@@ -11,441 +11,55 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        a = {
-            "forecasts": [
-                {
-                    "start_date": "2020-08-27T00:00:00+02:00",
-                    "end_date": "2020-08-28T00:00:00+02:00",
-                    "type": "D-1",
-                    "production_type": "SOLAR",
-                    "values": [
-                        {
-                            "start_date": "2020-08-27T00:00:00+02:00",
-                            "end_date": "2020-08-27T01:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 0,
-                        },
-                        {
-                            "start_date": "2020-08-27T01:00:00+02:00",
-                            "end_date": "2020-08-27T02:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 0,
-                        },
-                        {
-                            "start_date": "2020-08-27T02:00:00+02:00",
-                            "end_date": "2020-08-27T03:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 0,
-                        },
-                        {
-                            "start_date": "2020-08-27T03:00:00+02:00",
-                            "end_date": "2020-08-27T04:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 0,
-                        },
-                        {
-                            "start_date": "2020-08-27T04:00:00+02:00",
-                            "end_date": "2020-08-27T05:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 0,
-                        },
-                        {
-                            "start_date": "2020-08-27T05:00:00+02:00",
-                            "end_date": "2020-08-27T06:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 0,
-                        },
-                        {
-                            "start_date": "2020-08-27T06:00:00+02:00",
-                            "end_date": "2020-08-27T07:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 0,
-                        },
-                        {
-                            "start_date": "2020-08-27T07:00:00+02:00",
-                            "end_date": "2020-08-27T08:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 0.64,
-                        },
-                        {
-                            "start_date": "2020-08-27T08:00:00+02:00",
-                            "end_date": "2020-08-27T09:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 450.82,
-                        },
-                        {
-                            "start_date": "2020-08-27T09:00:00+02:00",
-                            "end_date": "2020-08-27T10:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 1775.89,
-                        },
-                        {
-                            "start_date": "2020-08-27T10:00:00+02:00",
-                            "end_date": "2020-08-27T11:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 3408.32,
-                        },
-                        {
-                            "start_date": "2020-08-27T11:00:00+02:00",
-                            "end_date": "2020-08-27T12:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 4841.04,
-                        },
-                        {
-                            "start_date": "2020-08-27T12:00:00+02:00",
-                            "end_date": "2020-08-27T13:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 5804.53,
-                        },
-                        {
-                            "start_date": "2020-08-27T13:00:00+02:00",
-                            "end_date": "2020-08-27T14:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 6228.76,
-                        },
-                        {
-                            "start_date": "2020-08-27T14:00:00+02:00",
-                            "end_date": "2020-08-27T15:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 6263.23,
-                        },
-                        {
-                            "start_date": "2020-08-27T15:00:00+02:00",
-                            "end_date": "2020-08-27T16:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 5915.57,
-                        },
-                        {
-                            "start_date": "2020-08-27T16:00:00+02:00",
-                            "end_date": "2020-08-27T17:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 5152,
-                        },
-                        {
-                            "start_date": "2020-08-27T17:00:00+02:00",
-                            "end_date": "2020-08-27T18:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 4060.92,
-                        },
-                        {
-                            "start_date": "2020-08-27T18:00:00+02:00",
-                            "end_date": "2020-08-27T19:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 2691.77,
-                        },
-                        {
-                            "start_date": "2020-08-27T19:00:00+02:00",
-                            "end_date": "2020-08-27T20:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 1189.5,
-                        },
-                        {
-                            "start_date": "2020-08-27T20:00:00+02:00",
-                            "end_date": "2020-08-27T21:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 183.48,
-                        },
-                        {
-                            "start_date": "2020-08-27T21:00:00+02:00",
-                            "end_date": "2020-08-27T22:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 0,
-                        },
-                        {
-                            "start_date": "2020-08-27T22:00:00+02:00",
-                            "end_date": "2020-08-27T23:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 0,
-                        },
-                        {
-                            "start_date": "2020-08-27T23:00:00+02:00",
-                            "end_date": "2020-08-28T00:00:00+02:00",
-                            "updated_date": "2020-08-26T16:27:00+02:00",
-                            "value": 0,
-                        },
-                    ],
-                },
-                {
-                    "start_date": "2020-08-27T00:00:00+02:00",
-                    "end_date": "2020-08-28T00:00:00+02:00",
-                    "type": "CURRENT",
-                    "production_type": "SOLAR",
-                    "values": [
-                        {
-                            "start_date": "2020-08-27T00:00:00+02:00",
-                            "end_date": "2020-08-27T01:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 0,
-                        },
-                        {
-                            "start_date": "2020-08-27T01:00:00+02:00",
-                            "end_date": "2020-08-27T02:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 0,
-                        },
-                        {
-                            "start_date": "2020-08-27T02:00:00+02:00",
-                            "end_date": "2020-08-27T03:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 0,
-                        },
-                        {
-                            "start_date": "2020-08-27T03:00:00+02:00",
-                            "end_date": "2020-08-27T04:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 0,
-                        },
-                        {
-                            "start_date": "2020-08-27T04:00:00+02:00",
-                            "end_date": "2020-08-27T05:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 0,
-                        },
-                        {
-                            "start_date": "2020-08-27T05:00:00+02:00",
-                            "end_date": "2020-08-27T06:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 0,
-                        },
-                        {
-                            "start_date": "2020-08-27T06:00:00+02:00",
-                            "end_date": "2020-08-27T07:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 0,
-                        },
-                        {
-                            "start_date": "2020-08-27T07:00:00+02:00",
-                            "end_date": "2020-08-27T08:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 0.64,
-                        },
-                        {
-                            "start_date": "2020-08-27T08:00:00+02:00",
-                            "end_date": "2020-08-27T09:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 450.82,
-                        },
-                        {
-                            "start_date": "2020-08-27T09:00:00+02:00",
-                            "end_date": "2020-08-27T10:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 1775.89,
-                        },
-                        {
-                            "start_date": "2020-08-27T10:00:00+02:00",
-                            "end_date": "2020-08-27T11:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 3408.32,
-                        },
-                        {
-                            "start_date": "2020-08-27T11:00:00+02:00",
-                            "end_date": "2020-08-27T12:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 4841.04,
-                        },
-                        {
-                            "start_date": "2020-08-27T12:00:00+02:00",
-                            "end_date": "2020-08-27T13:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 5804.53,
-                        },
-                        {
-                            "start_date": "2020-08-27T13:00:00+02:00",
-                            "end_date": "2020-08-27T14:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 6228.76,
-                        },
-                        {
-                            "start_date": "2020-08-27T14:00:00+02:00",
-                            "end_date": "2020-08-27T15:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 6263.23,
-                        },
-                        {
-                            "start_date": "2020-08-27T15:00:00+02:00",
-                            "end_date": "2020-08-27T16:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 5915.57,
-                        },
-                        {
-                            "start_date": "2020-08-27T16:00:00+02:00",
-                            "end_date": "2020-08-27T17:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 5152,
-                        },
-                        {
-                            "start_date": "2020-08-27T17:00:00+02:00",
-                            "end_date": "2020-08-27T18:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 4060.92,
-                        },
-                        {
-                            "start_date": "2020-08-27T18:00:00+02:00",
-                            "end_date": "2020-08-27T19:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 2691.77,
-                        },
-                        {
-                            "start_date": "2020-08-27T19:00:00+02:00",
-                            "end_date": "2020-08-27T20:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 1189.5,
-                        },
-                        {
-                            "start_date": "2020-08-27T20:00:00+02:00",
-                            "end_date": "2020-08-27T21:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 183.48,
-                        },
-                        {
-                            "start_date": "2020-08-27T21:00:00+02:00",
-                            "end_date": "2020-08-27T22:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 0,
-                        },
-                        {
-                            "start_date": "2020-08-27T22:00:00+02:00",
-                            "end_date": "2020-08-27T23:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 0,
-                        },
-                        {
-                            "start_date": "2020-08-27T23:00:00+02:00",
-                            "end_date": "2020-08-28T00:00:00+02:00",
-                            "updated_date": "2020-08-26T19:17:00+02:00",
-                            "value": 0,
-                        },
-                    ],
-                },
-                {
-                    "start_date": "2020-08-26T00:00:00+02:00",
-                    "end_date": "2020-08-27T00:00:00+02:00",
-                    "type": "ID",
-                    "production_type": "SOLAR",
-                    "values": [
-                        {
-                            "start_date": "2020-08-26T07:00:00+02:00",
-                            "end_date": "2020-08-26T08:00:00+02:00",
-                            "updated_date": "2020-08-26T06:37:00+02:00",
-                            "value": 1,
-                        },
-                        {
-                            "start_date": "2020-08-26T08:00:00+02:00",
-                            "end_date": "2020-08-26T09:00:00+02:00",
-                            "updated_date": "2020-08-26T06:37:00+02:00",
-                            "value": 488.35,
-                        },
-                        {
-                            "start_date": "2020-08-26T09:00:00+02:00",
-                            "end_date": "2020-08-26T10:00:00+02:00",
-                            "updated_date": "2020-08-26T06:37:00+02:00",
-                            "value": 1849.59,
-                        },
-                        {
-                            "start_date": "2020-08-26T10:00:00+02:00",
-                            "end_date": "2020-08-26T11:00:00+02:00",
-                            "updated_date": "2020-08-26T06:37:00+02:00",
-                            "value": 3464.42,
-                        },
-                        {
-                            "start_date": "2020-08-26T11:00:00+02:00",
-                            "end_date": "2020-08-26T12:00:00+02:00",
-                            "updated_date": "2020-08-26T06:37:00+02:00",
-                            "value": 4702.55,
-                        },
-                        {
-                            "start_date": "2020-08-26T12:00:00+02:00",
-                            "end_date": "2020-08-26T13:00:00+02:00",
-                            "updated_date": "2020-08-26T06:37:00+02:00",
-                            "value": 5525.61,
-                        },
-                        {
-                            "start_date": "2020-08-26T13:00:00+02:00",
-                            "end_date": "2020-08-26T14:00:00+02:00",
-                            "updated_date": "2020-08-26T06:37:00+02:00",
-                            "value": 5935,
-                        },
-                        {
-                            "start_date": "2020-08-26T14:00:00+02:00",
-                            "end_date": "2020-08-26T15:00:00+02:00",
-                            "updated_date": "2020-08-26T06:37:00+02:00",
-                            "value": 5918.05,
-                        },
-                        {
-                            "start_date": "2020-08-26T15:00:00+02:00",
-                            "end_date": "2020-08-26T16:00:00+02:00",
-                            "updated_date": "2020-08-26T06:37:00+02:00",
-                            "value": 5671.12,
-                        },
-                        {
-                            "start_date": "2020-08-26T16:00:00+02:00",
-                            "end_date": "2020-08-26T17:00:00+02:00",
-                            "updated_date": "2020-08-26T06:37:00+02:00",
-                            "value": 5011.25,
-                        },
-                        {
-                            "start_date": "2020-08-26T17:00:00+02:00",
-                            "end_date": "2020-08-26T18:00:00+02:00",
-                            "updated_date": "2020-08-26T06:37:00+02:00",
-                            "value": 4003.45,
-                        },
-                        {
-                            "start_date": "2020-08-26T18:00:00+02:00",
-                            "end_date": "2020-08-26T19:00:00+02:00",
-                            "updated_date": "2020-08-26T06:37:00+02:00",
-                            "value": 2671.81,
-                        },
-                        {
-                            "start_date": "2020-08-26T19:00:00+02:00",
-                            "end_date": "2020-08-26T20:00:00+02:00",
-                            "updated_date": "2020-08-26T06:37:00+02:00",
-                            "value": 1180.81,
-                        },
-                        {
-                            "start_date": "2020-08-26T20:00:00+02:00",
-                            "end_date": "2020-08-26T21:00:00+02:00",
-                            "updated_date": "2020-08-26T06:37:00+02:00",
-                            "value": 195.19,
-                        },
-                        {
-                            "start_date": "2020-08-26T21:00:00+02:00",
-                            "end_date": "2020-08-26T22:00:00+02:00",
-                            "updated_date": "2020-08-26T06:37:00+02:00",
-                            "value": 0,
-                        },
-                        {
-                            "start_date": "2020-08-26T22:00:00+02:00",
-                            "end_date": "2020-08-26T23:00:00+02:00",
-                            "updated_date": "2020-08-26T06:37:00+02:00",
-                            "value": 0,
-                        },
-                        {
-                            "start_date": "2020-08-26T23:00:00+02:00",
-                            "end_date": "2020-08-27T00:00:00+02:00",
-                            "updated_date": "2020-08-26T06:37:00+02:00",
-                            "value": 0,
-                        },
-                    ],
-                },
-            ]
-        }
-
-        # rte_access_token = get_rte_access_token()
+        rte_access_token = get_rte_access_token()
 
         now = datetime.datetime.now()
-        year = now.year + 1
 
         france = Country.objects.filter(code="FR").first()
 
         url = f"https://digital.iservices.rte-france.com/open_api/generation_forecast/v2/forecasts"
         params = {
-            "production_type": "SOLAR",
-            # "type": "D-1",
-            # "start_date": "2015-01-01T00:00:00+01:00",
-            # "end_date": f"{year}-01-01T00:00:00+01:00",
+            "production_type": "WIND",
         }
-        # headers = {"Authorization": f"Bearer {rte_access_token}"}
-        # r = requests.get(url, params=params, headers=headers)
-        # data = json.loads(r.text)
+        headers = {"Authorization": f"Bearer {rte_access_token}"}
+        r = requests.get(url, params=params, headers=headers)
+        data = json.loads(r.text)["forecasts"]
 
-        # print(data)
+        for predictions in data:
+            print()
+
+            type = predictions["type"]
+            production_type = predictions["production_type"]
+
+            print("#################", type, production_type)
+
+            for element in predictions["values"]:
+                start_date = datetime.datetime.fromisoformat(element["start_date"])
+                updated_date = datetime.datetime.fromisoformat(element["updated_date"])
+
+                value = int(element["value"] * 100)
+
+                forecast_q = Forecast.objects.filter(
+                    country=france,
+                    forecast_production_type=production_type,
+                    type=type,
+                    start_date=start_date,
+                )
+
+                if (
+                    forecast_q.exists()
+                    and forecast_q.first().updated_date >= updated_date
+                ):
+                    print("already seen ...")
+                    continue
+
+                forecast = Forecast.objects.update_or_create(
+                    country=france,
+                    forecast_production_type=production_type,
+                    type=type,
+                    start_date=start_date,
+                    updated_date=updated_date,
+                    value=value,
+                )
+
+                print("forecast saved !")

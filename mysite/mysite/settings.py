@@ -32,7 +32,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["enertrack.ew.r.appspot.com", "127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["0.0.0.0", "127.0.0.1", "localhost"]
 
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     "enertrack",
 ]
 
@@ -59,10 +60,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "mysite.urls"
 
+DIRNAME = os.path.abspath(os.path.dirname(__file__))
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(DIRNAME, "..", 'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -75,48 +77,23 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = "mysite.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-"""
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ener_local',
+        'USER': 'simondb',
+        'PASSWORD': 'energies',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
-"""
-
-if os.getenv("GAE_APPLICATION", None):
-    # Running on production App Engine, so connect to Google Cloud SQL using
-    # the unix socket at /cloudsql/<your-cloudsql-connection string>
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.mysql",
-            "HOST": "/cloudsql/enertrack:europe-west1:db-enertrack",
-            "USER": env("DB_USER"),
-            "PASSWORD": env("DB_PASSWORD"),
-            "NAME": env("DB_NAME"),
-        }
-    }
-else:
-    # Running locally so connect to either a local MySQL instance or connect
-    # to Cloud SQL via the proxy.  To start the proxy via commands line:
-    #    $ cloud_sql_proxy -instances=[INSTANCE_CONNECTION_NAME]=tcp:3306
-    # See https://cloud.google.com/sql/docs/mysql-connect-proxy
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.mysql",
-            "HOST": "127.0.0.1",
-            "PORT": "3306",
-            "NAME": env("DB_NAME"),
-            "USER": env("DB_USER"),
-            "PASSWORD": env("DB_PASSWORD"),
-        }
-    }
 
 
 # Password validation
@@ -152,3 +129,6 @@ USE_TZ = True
 # https://cloud.google.com/appengine/docs/flexible/python/serving-static-files
 STATIC_URL = "/static/"
 STATIC_ROOT = "static"
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static-files")
+]
