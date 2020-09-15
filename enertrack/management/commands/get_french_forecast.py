@@ -18,48 +18,50 @@ class Command(BaseCommand):
         france = Country.objects.filter(code="FR").first()
 
         url = f"https://digital.iservices.rte-france.com/open_api/generation_forecast/v2/forecasts"
-        params = {
-            "production_type": "WIND",
-        }
-        headers = {"Authorization": f"Bearer {rte_access_token}"}
-        r = requests.get(url, params=params, headers=headers)
-        data = json.loads(r.text)["forecasts"]
 
-        for predictions in data:
-            print()
+        for p in ["WIND", "SOLAR"]:
+            params = {
+                "production_type": p,
+            }
+            headers = {"Authorization": f"Bearer {rte_access_token}"}
+            r = requests.get(url, params=params, headers=headers)
+            data = json.loads(r.text)["forecasts"]
 
-            type = predictions["type"]
-            production_type = predictions["production_type"]
+            for predictions in data:
+                print()
 
-            print("#################", type, production_type)
+                type = predictions["type"]
+                production_type = predictions["production_type"]
 
-            for element in predictions["values"]:
-                start_date = datetime.datetime.fromisoformat(element["start_date"])
-                updated_date = datetime.datetime.fromisoformat(element["updated_date"])
+                print("#################", type, production_type)
 
-                value = int(element["value"] * 100)
+                for element in predictions["values"]:
+                    start_date = datetime.datetime.fromisoformat(element["start_date"])
+                    updated_date = datetime.datetime.fromisoformat(element["updated_date"])
 
-                forecast_q = Forecast.objects.filter(
-                    country=france,
-                    forecast_production_type=production_type,
-                    type=type,
-                    start_date=start_date,
-                )
+                    value = int(element["value"] * 100)
 
-                if (
-                    forecast_q.exists()
-                    and forecast_q.first().updated_date >= updated_date
-                ):
-                    print("already seen ...")
-                    continue
+                    forecast_q = Forecast.objects.filter(
+                        country=france,
+                        forecast_production_type=production_type,
+                        type=type,
+                        start_date=start_date,
+                    )
 
-                forecast = Forecast.objects.update_or_create(
-                    country=france,
-                    forecast_production_type=production_type,
-                    type=type,
-                    start_date=start_date,
-                    updated_date=updated_date,
-                    value=value,
-                )
+                    if (
+                        forecast_q.exists()
+                        and forecast_q.first().updated_date >= updated_date
+                    ):
+                        print("already seen ...")
+                        continue
 
-                print("forecast saved !")
+                    forecast = Forecast.objects.update_or_create(
+                        country=france,
+                        forecast_production_type=production_type,
+                        type=type,
+                        start_date=start_date,
+                        updated_date=updated_date,
+                        value=value,
+                    )
+
+                    print("forecast saved !")
