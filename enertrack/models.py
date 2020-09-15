@@ -70,3 +70,6 @@ class Forecast(models.Model):
             and self.start_date.month == date.month
             and self.start_date.year == date.year
         )
+
+    def __str__(self):
+        return f"{self.forecast_production_type} - {self.country} - {self.type} - {self.start_date} - {self.value}"

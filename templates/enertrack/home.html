@@ -1,9 +1,23 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}My amazing blog{% endblock %}
 
 {% block content %}
     <div id="home-container" class="mt-4 container">
-        <h2 class="font-weight-bold">Comprendre d'où vient l'électricité que nous consommons est essentiel.</h2>
+        <h2 class="font-weight-bold">Comprendre d'où vient l'électricité que nous consommons est essentiel blablabla ...</h2>
+            <button id="renderBtn">
+                Render
+            </button>
+    <div class="container">
+        <canvas id="myChart"></canvas>
     </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>let chart_data = '{{ chart_data|safe }}';</script>
+    <script src="{% static 'mychart.js' %}"></script>
 {% endblock %}
