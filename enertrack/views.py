@@ -2,6 +2,8 @@ import datetime
 from django.shortcuts import render
 from pytz import timezone
 
+from mysite import settings
+
 
 def index(request):
     paris = timezone("Europe/Amsterdam")
@@ -9,5 +11,5 @@ def index(request):
 
     print(today.year, today.month, today.hour)
 
-    context = {}
+    context = {'var': settings.STATIC_ROOT}
     return render(request, "enertrack/home.html", context)
