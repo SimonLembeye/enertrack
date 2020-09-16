@@ -1,5 +1,5 @@
-function renderChart(data, labels) {
-    let ctx = document.getElementById("myChart").getContext('2d');
+function renderChart(divId, data, labels) {
+    let ctx = document.getElementById(divId).getContext('2d');
     let myChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -25,9 +25,12 @@ function renderChart(data, labels) {
     });
 }
 
-$("#renderBtn").click(
+$(document).ready(
     function () {
-        data = JSON.parse(chart_data);
-        renderChart(data.values, data.labels);
+        let data = JSON.parse(chart_data);
+        let todayData = data.today_data;
+        renderChart("todayChart", todayData.values, todayData.labels);
+        let tmwData = data.tmw_data;
+        renderChart("tmwChart", tmwData.values, tmwData.labels);
     }
 );

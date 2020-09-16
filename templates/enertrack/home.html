@@ -5,14 +5,16 @@
 
 {% block content %}
     <div id="home-container" class="mt-4 container">
-        <h2 class="font-weight-bold">Comprendre d'où vient l'électricité que nous consommons est essentiel blablabla ...</h2>
-            <button id="renderBtn">
-                Render
-            </button>
-    <div class="container">
-        <canvas id="myChart"></canvas>
-    </div>
-    </div>
+        <h3 class="font-weight-bold">Production des renouvelables</h3>
+        <div class="container mt-4">
+            <h5 class="text-center">Aujourd'hui - {{ dates.today.day }}/{{ dates.today.month }}/{{ dates.today.year }}</h5>
+            <canvas id="todayChart"></canvas>
+        </div>
+        <div class="container mt-4">
+            <h5 class="text-center">Demain - {{ dates.tmw.day }}/{{ dates.tmw.month }}/{{ dates.tmw.year }}</h5>
+            <canvas id="tmwChart"></canvas>
+        </div>
+        </div>
 {% endblock %}
 
 {% block scripts %}

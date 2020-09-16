@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "enertrack",
 ]
 
@@ -59,8 +58,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "mysite.urls"
@@ -69,7 +67,7 @@ DIRNAME = os.path.abspath(os.path.dirname(__file__))
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(DIRNAME, "..", 'templates')],
+        "DIRS": [os.path.join(DIRNAME, "..", "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -90,13 +88,13 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'HOST': env('DB_HOST'),
-        'PORT': env("DB_PORT"),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": env("DB_NAME"),
+        "USER": env("DB_USER"),
+        "PASSWORD": env("DB_PASSWORD"),
+        "HOST": env("DB_HOST"),
+        "PORT": env("DB_PORT"),
     }
 }
 
@@ -132,8 +130,6 @@ USE_TZ = True
 STATIC_URL = "/static_j/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static_dir'),
-)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static_dir"),)
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

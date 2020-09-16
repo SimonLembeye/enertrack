@@ -72,4 +72,4 @@ class Forecast(models.Model):
         )
 
     def __str__(self):
-        return f"{self.forecast_production_type} - {self.country} - {self.type} - {self.start_date} - {self.value}"
+        return f"{self.forecast_production_type} - {self.country} - {self.type} - {self.start_date} - {self.updated_date} - {self.value}"

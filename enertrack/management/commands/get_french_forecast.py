@@ -37,7 +37,9 @@ class Command(BaseCommand):
 
                 for element in predictions["values"]:
                     start_date = datetime.datetime.fromisoformat(element["start_date"])
-                    updated_date = datetime.datetime.fromisoformat(element["updated_date"])
+                    updated_date = datetime.datetime.fromisoformat(
+                        element["updated_date"]
+                    )
 
                     value = int(element["value"] * 100)
 
