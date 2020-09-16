@@ -11,6 +11,8 @@ def index(request):
     today = datetime.datetime.now(paris)
     tmw = today + datetime.timedelta(days=1)
 
+    print("TOOTOTOTOOT", today)
+
     today_data = get_forecasts(today, country_code="FR")
     tmw_data = get_forecasts(tmw, country_code="FR")
 

@@ -13,8 +13,6 @@ class Command(BaseCommand):
 
         rte_access_token = get_rte_access_token()
 
-        now = datetime.datetime.now()
-
         france = Country.objects.filter(code="FR").first()
 
         url = f"https://digital.iservices.rte-france.com/open_api/generation_forecast/v2/forecasts"
@@ -29,6 +27,7 @@ class Command(BaseCommand):
 
             for predictions in data:
                 print()
+                print(predictions)
 
                 type = predictions["type"]
                 production_type = predictions["production_type"]
@@ -41,13 +40,14 @@ class Command(BaseCommand):
                         element["updated_date"]
                     )
 
-                    value = int(element["value"] * 100)
+                    value = int(element["value"] * 1000)
 
                     forecast_q = Forecast.objects.filter(
                         country=france,
                         forecast_production_type=production_type,
                         type=type,
                         start_date=start_date,
+                        value=value
                     )
 
                     if (
