@@ -1,8 +1,25 @@
 {% load static %}
 <link rel="stylesheet" href="{% static "nav.css" %}">
 
-<nav class="navbar sticky-top navbar-light" id="navbar-container">
-    <div class="container">
-      <a class="navbar-brand" href="#">Enertrack</a>
+<nav id="sidebar">
+    <div class="sidebar-header mt-4 text-center">
+        <h3 class="brand-color font-weight-bold">Enertrack</h3>
+        <p>Observatoire des énergies</p>
     </div>
+
+    <ul class="list-unstyled components">
+        <li class="active nav-list-item pl-3">
+            <i class="fa fa-poo-storm"></i><a href="#homeSubmenu" class="pl-2">Home</a>
+        </li>
+        <li class="nav-list-item pl-3">
+            <i class="fa fa-poo-storm"></i><a href="#" class="pl-2">About</a>
+        </li>
+        <li class="nav-list-item pl-3">
+            <i class="fa fa-poo-storm"></i><a href="#pageSubmenu" class="pl-2">Pages</a>
+        </li>
+        <li class="nav-list-item pl-3">
+            <i class="fa fa-poo-storm"></i><a href="#" class="pl-2">Portfolio</a>
+        </li>
+    </ul>
+
 </nav>

@@ -1,10 +1,10 @@
 #footer-container {
-    background-color: red;
+    width: 100%;
+    border-top: 2px #1d2124 solid;
 }
 
 #footer-content {
     display: flex;
-
 }
 
 .footer-ul {

@@ -4,13 +4,34 @@
 {% block title %}My amazing blog{% endblock %}
 
 {% block content %}
-    <div id="home-container" class="mt-4 container">
-        <h3 class="font-weight-bold">Production des renouvelables</h3>
-        <div class="container mt-4">
+    <div id="home-container">
+        <h3 class="font-weight-bold">Production des énergies renouvelables intermitentes</h3>
+        <hr />
+        <h5>En direct</h5>
+        <div class="live-container">
+            <div class="cell-container">
+                <div class="cell">
+                    <i class="fa fa-solar-panel fa-3x solar-panel"></i>
+                    <div class="mt-2">Production : 2.32 GW</div>
+                    <div class="mt-1">Facteur de charge : 12.34%</div>
+                </div>
+                <div class="cell mt-2">
+                    <i class="fa fa-wind fa-3x wind"></i>
+                    <div class="mt-2">Production : 4.07 GW</div>
+                    <div class="mt-1">Facteur de charge : 35.76%</div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="productionChart"></canvas>
+            </div>
+        </div>
+
+
+        <div class="mt-4 chart-container">
             <h5 class="text-center">Aujourd'hui - {{ dates.today.day }}/{{ dates.today.month }}/{{ dates.today.year }}</h5>
             <canvas id="todayChart"></canvas>
         </div>
-        <div class="container mt-4">
+        <div class="mt-4 chart-container">
             <h5 class="text-center">Demain - {{ dates.tmw.day }}/{{ dates.tmw.month }}/{{ dates.tmw.year }}</h5>
             <canvas id="tmwChart"></canvas>
         </div>
@@ -21,5 +42,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>let chart_data = '{{ chart_data|safe }}';</script>
-    <script src="{% static 'mychart.js' %}"></script>
+    <script src="{% static 'renewable_charts.js' %}"></script>
 {% endblock %}

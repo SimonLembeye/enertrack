@@ -1,7 +1,63 @@
-body {
-    font-family: 'Euclid Circular B','Helvetica Neue','Arial', sans-serif !important;
+.wrapper {
+    font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", sans-serif;
 }
 
-h1 {
-    background-color: #003366;
+.wrapper {
+    display: flex;
+}
+
+#home-container {
+    background-color: #f3f3f3;
+    padding: 3rem 0 0 3rem;
+}
+
+.content {
+    margin-left: 14rem;
+    width: 100%;
+    height: 100%;
+}
+
+.brand-color {
+    color: #04f;
+}
+
+.live-container{
+    display: flex;
+    width: 100%;
+}
+
+.cell-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border: #1b1e21 3px solid;
+    border-radius: 5px;
+    min-width: 10rem;
+    min-height: 10rem;
+    max-width: 20rem;
+    max-height: 20rem;
+    background-color: white;
+    font-weight: bold;
+    padding: 1.5rem 0 1.5rem 0;
+}
+
+.chart-container {
+    max-width: 50rem;
+    max-height: 50rem;
+    background-color: white;
+    padding: 2rem;
+}
+
+.solar-panel {
+    color: #ffc107;
+}
+
+.wind {
+    color: #5b80b2;
 }

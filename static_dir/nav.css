@@ -1,3 +1,30 @@
 #navbar-container {
     box-shadow: 0px 3px 2px 0px rgba(0,0,0,0.75);
 }
+
+#sidebar {
+    min-width: 14rem;
+    max-width: 14rem;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.5);
+    /* top layer */
+    z-index: 9999;
+}
+
+.nav-list-item{
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    color: black; !important;
+}
+
+.nav-list-item a {
+    color: #4e555b; !important;
+}
+
+.active {
+    font-weight: bold;
+}
