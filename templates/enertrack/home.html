@@ -21,26 +21,43 @@
                     <div class="mt-1">Facteur de charge : 35.76%</div>
                 </div>
             </div>
-            <div class="chart-container">
-                <canvas id="productionChart"></canvas>
+            <div class="chart-container production-chart-container ml-5">
+                <scan class="text-center font-weight-bold mb-2 mt-2">Production renouvelables actuellement</scan>
+                <div class="production-sub-container">
+                    <canvas id="productionChart" width="550" height="120"></canvas>
+                </div>
+                <p class="text-info-production mt-2">
+                    Les capacitées installées de solaire photovoltaïque en France en 2020 sont de <span class="font-weight-bold solar-panel">9.6 GW</span>.<br>
+                    Les capacitées installées d'éolien en France en 2020 sont de <span class="font-weight-bold wind">16.5 GW</span>.<br>
+                    Données: <span class="brand-color">RTE</span>
+                </p>
             </div>
         </div>
 
+        <hr />
 
-        <div class="mt-4 chart-container">
-            <h5 class="text-center">Aujourd'hui - {{ dates.today.day }}/{{ dates.today.month }}/{{ dates.today.year }}</h5>
-            <canvas id="todayChart"></canvas>
+        <h5>Prévisions de production</h5>
+        <div class="forecast-container pb-5">
+            <div class="chart-container mr-2 mt-2">
+                <h5 class="text-center">Aujourd'hui - {{ dates.today.day }}/{{ dates.today.month }}/{{ dates.today.year }}</h5>
+                <div class="forecast-sub-container">
+                    <canvas width="500" height="250" id="todayChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-container mt-2">
+                <h5 class="text-center">Demain - {{ dates.tmw.day }}/{{ dates.tmw.month }}/{{ dates.tmw.year }}</h5>
+                <div class="forecast-sub-container">
+                    <canvas width="500" height="250" id="tmwChart"></canvas>
+                </div>
+            </div>
         </div>
-        <div class="mt-4 chart-container">
-            <h5 class="text-center">Demain - {{ dates.tmw.day }}/{{ dates.tmw.month }}/{{ dates.tmw.year }}</h5>
-            <canvas id="tmwChart"></canvas>
-        </div>
-        </div>
+    </div>
 {% endblock %}
 
 {% block scripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="https://rawgit.com/chartjs/chartjs-plugin-annotation/master/chartjs-plugin-annotation.js"></script>
     <script>let chart_data = '{{ chart_data|safe }}';</script>
     <script src="{% static 'renewable_charts.js' %}"></script>
 {% endblock %}

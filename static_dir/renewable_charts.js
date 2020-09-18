@@ -6,23 +6,85 @@ function renderChart(divId, data, labels) {
             labels: labels,
             datasets: [
                 {
-                label: 'SUM',
                 data: data.sum,
                 borderColor: 'rgba(0, 0, 0, 1)',
             },{
-                label: 'SOLAR',
                 data: data.solar,
                 borderColor: 'rgba(255, 192, 0, 1)',
                 backgroundColor: 'rgba(255, 192, 0, 0.2)',
             },{
-                label: 'WIND',
                 data: data.wind,
                 borderColor: 'rgba(0, 192, 255, 1)',
                 backgroundColor: 'rgba(0, 192, 255, 0.2)',
             }
             ]
         },
-    });
+          options: {
+            responsive: true,
+              legend: { display: false },
+            title: {
+              display: false,
+            },
+            tooltips: {
+              mode: 'index',
+              intersect: true
+            },
+            annotation: {
+              annotations: [{
+                type: 'line',
+                mode: 'horizontal',
+                scaleID: 'y-axis-0',
+                value: 10600,
+                borderColor: '#ffc107',
+                borderWidth: 1,
+                label: {
+                  enabled: true,
+                  content: 'Capacitées installées solaire',
+                    fontSize: 8,
+                    position: "left",
+                    fontColor: "black",
+                    xPadding: 1,
+                    yPadding: 1,
+                    backgroundColor: 'white',
+                }
+              },{
+                type: 'line',
+                mode: 'horizontal',
+                scaleID: 'y-axis-0',
+                value: 16500,
+                borderColor: '#5b80b2',
+                borderWidth: 1,
+                label: {
+                  enabled: true,
+                  content: 'Capacitées installées éolien',
+                    fontSize: 8,
+                    position: "left",
+                    fontColor: "black",
+                    xPadding: 1,
+                    yPadding: 1,
+                    backgroundColor: 'white',
+                }
+              }, {
+                  type: 'line',
+                  mode: 'horizontal',
+                  scaleID: 'y-axis-0',
+                  value: 27100,
+                  borderColor: 'black',
+                  borderWidth: 1,
+                  label: {
+                      enabled: true,
+                      content: 'Capacitées installées total enr',
+                      fontSize: 8,
+                      position: "left",
+                      fontColor: "black",
+                      xPadding: 1,
+                      yPadding: 1,
+                      backgroundColor: 'white',
+                  }
+              }]
+            }
+          }
+        });
 }
 
 function renderProductionChart(data) {
@@ -41,16 +103,22 @@ function renderProductionChart(data) {
             }],
         },
         options: {
+            responsive: false,
             legend: { display: false },
             scales: {
                 xAxes: [{
                     ticks: {
                         min: 0
                     },
-                    staked: false
+                    stacked: false,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Production en GW'
+                    }
                 }],
                 yAxes: [{
-                    stacked: true
+                    stacked: true,
+                    barPercentage: 0.6,
                 }]
             }
         }
