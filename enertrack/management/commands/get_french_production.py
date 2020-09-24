@@ -30,7 +30,6 @@ class Command(BaseCommand):
                         element["updated_date"]
                     )
 
-                    print(start_date)
 
                     measure = Measure.objects.update_or_create(
                         country=france,
