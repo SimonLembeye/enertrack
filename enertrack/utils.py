@@ -15,9 +15,7 @@ def get_forecasts(date, country_code="FR"):
         lb_date = paris.localize(lb_date)
 
     forecast_q = Forecast.objects.filter(
-        start_date__gte=lb_date,
-        start_date__lte=ub_date,
-        country__code=country_code,
+        start_date__gte=lb_date, start_date__lte=ub_date, country__code=country_code,
     )
 
     if not forecast_q.exists():
@@ -32,8 +30,7 @@ def get_forecasts(date, country_code="FR"):
     wind_q = forecast_q.filter(forecast_production_type="WIND")
 
     for h in range(24):
-        date = (lb_date + datetime.timedelta(hours=h))
-        print(date)
+        date = lb_date + datetime.timedelta(hours=h)
 
         h_solar_q = solar_q.filter(start_date=date).order_by("-updated_date")
         if h_solar_q.exists():
@@ -49,10 +46,6 @@ def get_forecasts(date, country_code="FR"):
 
     return {
         "data_available": True,
-        "values": {
-            "solar": solar_values,
-            "wind": wind_values,
-            "sum": sum_values,
-        },
+        "values": {"solar": solar_values, "wind": wind_values, "sum": sum_values,},
         "labels": labels,
     }

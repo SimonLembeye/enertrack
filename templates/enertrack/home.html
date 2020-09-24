@@ -12,13 +12,13 @@
             <div class="cell-container">
                 <div class="cell">
                     <i class="fa fa-solar-panel fa-3x solar-panel"></i>
-                    <div class="mt-2">Production : 2.32 GW</div>
-                    <div class="mt-1">Facteur de charge : 12.34%</div>
+                    <div class="mt-2">Production : {{ prod_data.solar_last_production }} GW</div>
+                    <div class="mt-1">Facteur de charge : {{ prod_data.solar_load_factor }}%</div>
                 </div>
                 <div class="cell mt-2">
                     <i class="fa fa-wind fa-3x wind"></i>
-                    <div class="mt-2">Production : 4.07 GW</div>
-                    <div class="mt-1">Facteur de charge : 35.76%</div>
+                    <div class="mt-2">Production : {{ prod_data.wind_last_production }} GW</div>
+                    <div class="mt-1">Facteur de charge : {{ prod_data.wind_load_factor }}%</div>
                 </div>
             </div>
             <div class="chart-container production-chart-container ml-5">
@@ -59,5 +59,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
     <script src="https://rawgit.com/chartjs/chartjs-plugin-annotation/master/chartjs-plugin-annotation.js"></script>
     <script>let chart_data = '{{ chart_data|safe }}';</script>
+    <script>let prod_data = '{{ prod_data_json|safe }}';</script>
     <script src="{% static 'renewable_charts.js' %}"></script>
 {% endblock %}

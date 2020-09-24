@@ -88,7 +88,6 @@ function renderChart(divId, data, labels) {
 }
 
 function renderProductionChart(data) {
-    console.log('YES')
     let ctx = document.getElementById("productionChart").getContext('2d');
     var myBarChart = new Chart(ctx, {
         type: 'horizontalBar',
@@ -96,10 +95,10 @@ function renderProductionChart(data) {
             labels: ["Solaire", "Eolien"],
             datasets: [{
                 backgroundColor: ["rgba(255, 192, 0, 0.2)", "rgba(0, 192, 255, 0.2)"],
-                data: [50.56, 34.32],
+                data: [data.solar_installed_capacities, data.wind_installed_capacities],
             },{
                 backgroundColor: ["#ffc107", "#5b80b2"],
-                data: [20, 10],
+                data: [data.solar_last_production, data.wind_last_production],
             }],
         },
         options: {
@@ -128,7 +127,7 @@ function renderProductionChart(data) {
 
 $(document).ready(
     function () {
-        renderProductionChart("DD");
+        renderProductionChart(JSON.parse(prod_data));
         let data = JSON.parse(chart_data);
         let todayData = data.today_data;
         renderChart("todayChart", todayData.values, todayData.labels);

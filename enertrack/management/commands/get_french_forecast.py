@@ -7,7 +7,7 @@ from enertrack.models import Country, Forecast
 
 
 class Command(BaseCommand):
-    help = "Closes the specified poll for voting"
+    help = "Get French renewables forecast form RTE API"
 
     def handle(self, *args, **options):
 
@@ -47,7 +47,7 @@ class Command(BaseCommand):
                         forecast_production_type=production_type,
                         type=type,
                         start_date=start_date,
-                        value=value
+                        value=value,
                     )
 
                     if (

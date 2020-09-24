@@ -9,6 +9,7 @@ PRODUCTION_TYPE_CHOICES = (
     ("SOLAR", "solar"),
     ("WIND_OFFSHORE", "wind_offshore"),
     ("WIND_ONSHORE", "wind_onshore"),
+    ("WIND", "wind"),
 )
 
 FORECAST_PRODUCTION_TYPE_CHOICES = (
@@ -73,3 +74,23 @@ class Forecast(models.Model):
 
     def __str__(self):
         return f"{self.forecast_production_type} - {self.country} - {self.type} - {self.start_date} - {self.updated_date} - {self.value}"
+
+
+class Measure(models.Model):
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    value = models.IntegerField(help_text="expressed in kW")
+    start_date = models.DateTimeField(auto_now=False)
+    updated_date = models.DateTimeField(auto_now=False)
+    production_type = models.CharField(
+        max_length=50, choices=PRODUCTION_TYPE_CHOICES, default="SOLAR"
+    )
+
+    def are_the_same_day(self, date):
+        return (
+            self.start_date.day == date.day
+            and self.start_date.month == date.month
+            and self.start_date.year == date.year
+        )
+
+    def __str__(self):
+        return f"{self.production_type} - {self.country} - {self.start_date} - {self.updated_date} - {self.value}"
